@@ -26,12 +26,25 @@ function FamousSection() {
   const addPerson = (evt) => {
     evt.preventDefault();
     console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
-    
+    let person = {
+      name: famousPersonName,
+      role: famousPersonRole
+    };
     // TODO: create POST request to add this new person to the database
-
+    axios({
+      method: 'POST',
+      url: '/people',
+      data: person
+    }).then((response) => {
+      console.log("POST request successful");
+      setPersonName('');
+      setPersonRole('');
+      fetchPeople();
+    }).catch((error) => {
+      console.log("Error in POST:", error);
+    })
     // HINT: the server is expecting a person object 
     //       with a `name` and a `role` property
-  
   }
 
     return (
